@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>小型船舶に搭載する無線設備（搭載要件の例）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#0b1624;--bg2:#152538;--card:rgba(255,255,255,0.04);--border:rgba(100,180,255,0.18);
+--text:#e3edf7;--muted:#8fa6bd;--cy:#4dd0e1;--am:#ffb74d;--ok:#69f0ae;--tri:#ffd54f;--sa:#ff9e57;--ng:#ef7a7a;--na:#5d7287}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:'Noto Sans JP','Hiragino Sans',Meiryo,sans-serif;color:var(--text);
+background:linear-gradient(160deg,var(--bg1),var(--bg2));min-height:100vh;padding:1.2rem .8rem 2rem}
+.wrap{max-width:1240px;margin:0 auto}
+header{text-align:center;margin-bottom:1rem}
+.badge{display:inline-block;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--cy);
+border:1px solid var(--border);border-radius:99px;padding:3px 12px;margin-bottom:.6rem}
+h1{font-size:20px;margin:.2rem 0 .3rem}
+header p{font-size:12px;color:var(--muted);margin:0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:.8rem 1rem;margin-bottom:.8rem;font-size:12px;line-height:1.8;color:var(--muted)}
+.card b{color:var(--text)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:.2rem 0 .8rem}
+.chip{font:inherit;font-size:12px;color:var(--muted);background:transparent;border:1px solid var(--border);border-radius:99px;padding:5px 12px;cursor:pointer}
+.chip.on{color:#06202b;background:var(--cy);border-color:var(--cy);font-weight:700}
+.tw{overflow:auto;border:1px solid var(--border);border-radius:12px;max-height:85vh;background:rgba(8,16,28,.55)}
+table{border-collapse:separate;border-spacing:0;width:100%;min-width:760px;font-size:12px}
+th,td{border-bottom:1px solid var(--border);border-right:1px solid var(--border);padding:6px 8px;vertical-align:top}
+thead th{position:sticky;top:0;z-index:3;background:#112033;text-align:center;font-size:13px}
+thead th small{display:block;font-weight:400;color:var(--muted);font-size:10px}
+th.eq,td.eq{position:sticky;left:0;z-index:2;background:#0f1c2d;min-width:190px;max-width:230px;text-align:left}
+thead th.eq{z-index:4}
+tr.sec td{background:#16314a;color:var(--cy);font-weight:700;font-size:12px;position:static}
+tr.sec td.eq{position:sticky;left:0;z-index:2}
+tr.sub td{background:#122437;color:var(--muted);font-size:11px;font-weight:500}
+tr.sub td.eq{position:sticky;left:0;z-index:2}
+.gn{color:var(--am);font-family:'Share Tech Mono',monospace;font-size:11px;white-space:nowrap}
+.ln{display:flex;align-items:baseline;gap:6px;line-height:1.55;padding:1px 0}
+.ar{flex:1;color:var(--muted);font-size:11px}
+.mk{font-family:'Share Tech Mono','Noto Sans JP',monospace;font-size:14px;min-width:1.2em;text-align:center}
+.nt{color:var(--cy);font-family:'Share Tech Mono',monospace;font-size:11px;min-width:3.4em;text-align:left}
+.m-o{color:var(--ok)}.m-d{color:var(--tri)}.m-a{color:var(--sa)}.m-x{color:var(--ng)}.m-n{color:var(--na)}
+td.nts{font-size:11px;line-height:1.7;color:var(--muted);min-width:240px}
+td.nts .h{color:var(--text);font-weight:700;margin-top:.4rem}
+td.nts .h:first-child{margin-top:0}
+td.nts .i b{color:var(--cy);font-family:'Share Tech Mono',monospace;font-weight:400}
+.lg span{white-space:nowrap;margin-right:.8rem}
+.gnotes div{margin-bottom:.3rem;padding-left:3.2em;text-indent:-3.2em}
+.gnotes b{color:var(--am);font-family:'Share Tech Mono',monospace;font-weight:400}
+footer{text-align:center;font-size:11px;color:var(--muted);margin-top:1.2rem;line-height:1.9}
+.hide{display:none}
+
+.tabs{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:.2rem 0 .8rem}
+.tab{font:inherit;font-size:13px;color:var(--muted);background:transparent;border:1px solid var(--border);border-radius:10px 10px 0 0;padding:8px 14px;cursor:pointer}
+.tab.on{color:#06202b;background:var(--cy);border-color:var(--cy);font-weight:700}
+.thead{font-size:14px;font-weight:700;margin:.2rem 0 .5rem;text-align:center}
+.thead small{display:block;font-size:11px;font-weight:400;color:var(--muted)}
+td.cell{text-align:center;min-width:92px}
+td.cell .mk{display:block;font-size:16px}
+td.cell .nn{display:block;font-size:11px;font-family:'Share Tech Mono',monospace;line-height:1.5}
+td.cell .nn .t{color:var(--cy)}
+td.cell .nn .g{color:var(--am)}
+.ntc div{margin-bottom:.3rem;padding-left:3.2em;text-indent:-3.2em}
+.ntc b{color:var(--cy);font-family:'Share Tech Mono',monospace;font-weight:400}
+.ntc .h{color:var(--text);font-weight:700;padding-left:0;text-indent:0;margin-top:.5rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="badge">JCI 2024/2 別表</div>
+  <h1>小型船舶に搭載する無線設備（搭載要件の例）</h1>
+  <p>船種 × 設備の一覧　／　航行区域ごとに表示</p>
+</header>
+
+<div class="tabs" id="tabs" role="tablist"></div>
+
+<div class="card lg">
+  <b>凡例</b><br>
+  <span><b class="m-o">○</b> 認められる設備</span>
+  <span><b class="m-d">△</b> 平水区域にあっては、母港を含めサービスエリア内にあるものに限る。ただし、携帯・自動車電話は航路で通信可能な場合に限る（航路申告書の提出が必要）。近海区域（A2以内）及び漁船（A2以内）にあっては、当該船舶電話で通話可能な範囲として定められた水域に限る。</span><br>
+  <span><b class="m-x">×</b> 認められない設備</span>
+  <span><b class="m-n">ー</b> 施設する義務のない設備</span><br>
+  <span><b class="m-a">▲</b> 船舶安全法施行規則第4条の規定により、無線電信等を施設することの免除を管海官庁（日本小型船舶検査機構各支部）から受けた船舶に、通信範囲内に限り代替物として搭載が認められる設備（免除申請が必要）。また、以下の船舶の場合も、同様の免除申請により代替物の搭載が認められる。（第2種小型帆船以外で代替物により免除する場合は、具体的航路（又は水域）を指定して航行区域を定めること。（定期検査時以外は船舶検査証書の書換申請が必要））<br>
+  （1）発航港から到達港までの距離が短い航路のみを航行する船舶の場合、汽笛、信号紅炎（大型船舶用）（但し、当該船舶の運航を行っている事務所において、当該船舶の就航する航路全般にわたり、運航状況を確認できる適切な運航管理がされていること。発航港及び到達港両方に事務所がある場合、航路距離が3海里以内を標準。）<br>
+  （2）母船の周辺のみを航行する搭載艇の場合、常に母船と連絡できる通信設備（トランシーバー等）。検査機構の確認を受ける必要がある。</span><br>
+  <span><b class="gn">※n</b>（琥珀色）＝設備名に付く注記（各該当セルに記載）　→ 下の「無線電信等の注記」を参照</span>
+  <span><b style="color:var(--cy);font-family:'Share Tech Mono',monospace">※n</b>（水色）＝各船種の注記（各該当セルに記載）　→ 表の下の「この船種の注記」を参照</span>
+</div>
+
+<div class="thead" id="thead"></div>
+<div class="tw"><table id="tbl"></table></div>
+<div class="card ntc" id="tnotes" style="margin-top:.8rem"></div>
+
+<div class="card gnotes" style="margin-top:.8rem">
+  <b>無線電信等の注記（設備名に付く※）</b><br>
+  <div><b>※1</b>　デジタル選択呼出装置及びデジタル選択呼出聴守装置を施設していないもの。A3又はA4水域を航行する第2種小型帆船の場合は、（公財）日本セーリング連盟に所属している場合であって、同連盟の運用するHF海岸局との間で連絡することができるHFで運用する無線電話であれば免除により代替物として認められる。</div>
+  <div><b>※2</b>　陸上に通信の相手方となる免許人所属の海岸局（無線局免許状の通信の相手方に記載されているもの）がある「船舶局」をいう。（例：（公財）日本セーリング連盟に加盟し、同連盟が運用する国際VHF海岸局に加入している小型帆船に施設する国際VHF）なお、この国際VHFを無線電信等とする場合は、電波法上問題ないか地方総合通信局に確認することが望ましい。</div>
+  <div><b>※3</b>　地方総合通信局が認める場合に限る。</div>
+  <div><b>※4</b>　スポーツ・レジャー用のもの。</div>
+  <div><b>※5</b>　業務用船舶には不可。</div>
+  <div><b>※6</b>　国内で無線局免許を取得した電気通信事業者のものに限る。</div>
+  <div><b>※7</b>　航行区域が平水区域に限る。ただし、限定沿海区域であって現に認められている場合には令和6年4月1日以降最初の定期的検査までの間は有効。</div>
+</div>
+
+<div class="card">
+  <b>（注）</b>A3水域を航行する船舶であって、専ら離島周辺（沿海区域又は平水区域内に限る）を航行する場合は、上記の表中の無線電信等のうちいずれかであって、陸上と日常の通信ができるもの（MF帯・HF帯SSB無線電話、150MHz帯無線電話、40MHz帯無線電話、27MHz帯無線電話、400MHz帯無線電話、5W型国際VHFについては、地方総合通信局が認める場合に限る。アマチュア無線、簡易無線、パーソナル無線又はトランシーバーの場合は免除申請を要す。）と上記の表中で必要とされる救命設備を施設すればよい。<br>
+  ※「5W型国際VHF」とは、「5W出力型VHF無線電話（マリンVHFを含む。）ただし、16ch（156.8MHz）（緊急通信用）付き」のものを示す。
+</div>
+
+<footer>
+  出典：別表「小型船舶に搭載する無線設備（搭載要件の例）」JCI 2024/2<br>
+  本ページは原表の写真から転記した参考資料です。最終判断は原表及び日本小型船舶検査機構にご確認ください。
+</footer>
+</div>
+
+<script>
+// 設備（列）定義：0-10 無線電信等 / 11-13 救命設備 / 14 航海用具
+var EQ=[
+ {sec:'無線電信等（いずれか1）'},
+ {sub:'無線電話又は直接印刷電信'},
+ {t:['MF（中波）帯']},
+ {t:['HF（短波）帯']},
+ {t:['インマルサット（C型）']},
+ {sub:'その他の無線電信等'},
+ {t:['MF帯・HF帯SSB無線電話'],g:'※1※3'},
+ {t:['インマルサット（FB）']},
+ {t:['イリジウム・Isat Phone Pro・Isat Phone2・Oceana800・スラヤ衛星電話'],g:'※6'},
+ {t:['27MHz帯無線電話','40MHz帯無線電話','150MHz帯無線電話'],gs:['※3','※3','※2※3'],merged:true},
+ {t:['N-STAR衛星船舶電話']},
+ {t:['マリンVHF','400MHz帯無線電話・マリンホーン','携帯・自動車電話'],gs:['※3※4','※3※4','※7'],merged:true},
+ {t:['アマチュア無線'],g:'※5'},
+ {t:['簡易無線・パーソナル無線又はトランシーバー']},
+ {sec:'救命設備'},
+ {t:['小型船舶用衛星利用非常用位置指示無線標識装置（EPIRB）']},
+ {t:['小型船舶用レーダー・トランスポンダー／小型船舶用捜索救助用位置指示送信装置']},
+ {t:['持運び式双方向無線電話装置']},
+ {sec:'航海用具'},
+ {t:['HFデジタル選択呼出装置及びHFデジタル選択呼出聴守装置']}
+];
+// EQ の t 行 → データ列インデックス
+var IDX=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14];
+// 無線(11字): MF HF C SSB FB 衛星電話 [27/40/150] N-STAR [VHF/400/携帯] アマチュア 簡易
+var E='-----------';
+var TYPES=[
+ {name:'旅客船',sub:'（非国際）',areas:[
+  {l:'A2 平水、限定沿海',ln:'1',r:'oooooooodaa',s:['-','-','-'],v:'-'},
+  {l:'A2 沿海及び沿岸 12m未満',r:'ooooooooxxx',s:['o:2,3','o:2,3','o:2,3'],v:'-'},
+  {l:'A2 沿海及び沿岸 12m以上',r:'ooooooooxxx',s:['o:2,3','o:2,3','o:2,3'],v:'-'}],
+  notes:[['無線電信等',[['1','湖（琵琶湖を除く）、川、港内のみを航行する場合は不要。']]],
+   ['救命設備',[['2','沿海区域に限る。'],['3','沿海区域を航行区域とする平成6年11月3日迄に建造され、又は建造に着手された長さ12m未満の船舶は不要。']]]]},
+ {name:'プレジャーモーターボート・釣船・作業船・小型兼用船等',sub:'（非旅客船）',areas:[
+  {l:'A2 平水、限定沿海及び沿岸',r:E,s:['-','-','-'],v:'-'},
+  {l:'A2 沿海 12m未満',r:E,s:['-','-','-'],v:'-'},
+  {l:'A2 沿海 12m以上',r:'ooooooooxxx',s:['o:2','o:2','o:1,2'],v:'-'},
+  {l:'A2 近海',r:'ooooooxdxxx',s:['o:2','o:2','o:2,3'],v:'-'},
+  {l:'A3 沿海 12m以上',r:'xooxxxxxxxx',s:['o:2','o:2','o:1,2'],v:'o:4'},
+  {l:'A3 近海以上',r:'xooxxxxxxxx',s:['o:2','o:2','o:2,3'],v:'o:4'}],
+  notes:[['救命設備',[['1','国際航海するものに限る。'],['2','無線電信等を免除された搭載艇は除く。'],['3','近海以上の航行区域を有する平成6年11月3日迄に建造され、又は建造に着手された長さ12m未満の船舶は不要。']]],
+   ['航海用具',[['4','インマルサット無線電話又はインマルサット直接印刷電信を備え付けている場合又は無線電信等を免除されている場合は不要。']]]]},
+ {name:'第2種小型帆船',sub:'',areas:[
+  {l:'A2 平水、限定沿海及び沿岸',r:E,s:['-','-','-'],v:'-'},
+  {l:'A2 沿海 12m未満',r:E,s:['-','-','-'],v:'-'},
+  {l:'A2 沿海 12m以上',r:'ooooooooxax',s:['o','o:1','o:2'],v:'-'},
+  {l:'A2 近海',r:'ooooooxdxax',s:['o','o:1','o:3'],v:'-'},
+  {l:'A3 沿海 12m以上',r:'xooaxaxxxax',rn:{5:'4'},s:['o','o:1','o:2'],v:'o:5'},
+  {l:'A3 近海以上',r:'xooaxaxxxax',rn:{5:'4'},s:['o','o:1','o:3'],v:'o:5'},
+  {l:'A4 近海以上',r:'xoxaxaxxxax',rn:{5:'4'},s:['o','o:1','o:3'],v:'o:5'}],
+  notes:[['救命設備',[['1','レーダー反射器（航海用レーダー反射器を除く。）を備え付ける場合は不要。'],['2','国際航海するものに限る。'],['3','近海以上の航行区域を有する平成6年11月3日迄に建造され、又は建造に着手された長さ12m未満の船舶は不要。'],['4','Isat Phone Pro、Isat Phone2、Oceana800及びスラヤ衛星電話は除く。']]],
+   ['航海用具',[['5','インマルサット無線電話又はインマルサット直接印刷電信を備え付けている場合又は無線電信等を免除されている場合（アマチュア無線、SSB無線電話又はイリジウムを備え付けている場合）は不要。']]]]},
+ {name:'漁船',sub:'（小型第1種及び小型第2種）',areas:[
+  {l:'100海里以内',r:E,s:['o:1,2','o:1,2','-'],v:'-'},
+  {l:'A2',r:'ooooooxdxxx',s:['o:1,2','o:1,2','-'],v:'-'},
+  {l:'A3',r:'xooxxxxxxxx',s:['o:1,2','o:1,2','-'],v:'o:3'},
+  {l:'A4',r:'xoxxxxxxxxx',s:['o:1,2','o:1,2','-'],v:'o:3'}],
+  notes:[['救命設備',[['1','小型第2種に限る。'],['2','無線電信等を免除された搭載艇は除く。']]],
+   ['航海用具',[['3','インマルサット無線電話又はインマルサット直接印刷電信を備え付けている場合又は無線電信等を免除されている場合は不要。平成7年1月31日迄に建造され、又は建造に着手された漁船は、「操業の安全確保のための通信に関する申し合わせ事項」（「対象船舶一覧表」に該当船舶が記載されているもの）を船内に備え付ける場合は不要。']]]]}
+];
+var SYM={o:'○',d:'△',a:'▲',x:'×','-':'ー'};
+function mk(c,notes){
+  var n=notes?'※'+notes.split(',').join('※'):'';
+  return '<span class="mk m-'+(c==='-'?'n':c)+'">'+SYM[c]+'</span><span class="nt">'+n+'</span>';
+}
+// 各エリアの15マーク [0..10 無線, 11..13 救命, 14 航海]
+function marks(a){
+  var m=[];
+  for(var i=0;i<11;i++) m.push([a.r[i],(a.rn&&a.rn[i])||'']);
+  a.s.forEach(function(x){var p=x.split(':');m.push([p[0],p[1]||'']);});
+  var p=a.v.split(':'); m.push([p[0],p[1]||'']);
+  return m;
+}
+var COLMAP=[]; (function(){var c=0;EQ.forEach(function(e){ if(e.t){COLMAP.push(c); c++;} else COLMAP.push(null);});})();
+var TABN=['旅客船','プレジャーモーターボート等','第2種小型帆船','漁船'];
+var cur=0;
+function gnums(e){var d=((e.gs?e.gs.join(''):e.g)||'').match(/\d/g)||[];return d.filter(function(v,i){return d.indexOf(v)===i;}).sort();}
+function build(){
+  var t=TYPES[cur], n=t.areas.length;
+  document.getElementById('thead').innerHTML=t.name+'<small>'+t.sub+'</small>';
+  var h='<thead><tr><th class="eq">設備</th>';
+  t.areas.forEach(function(a){h+='<th>'+a.l+(a.ln?' <span class="nt" style="min-width:0">※'+a.ln+'</span>':'')+'</th>';});
+  h+='</tr></thead><tbody>';
+  EQ.forEach(function(e,ri){
+    if(e.sec||e.sub){h+='<tr class="'+(e.sec?'sec':'sub')+'"><td class="eq">'+(e.sec||e.sub)+'</td><td colspan="'+n+'"></td></tr>';return;}
+    var col=COLMAP[ri], gn=gnums(e);
+    var lab=e.t.map(function(x,k){
+      var g=e.merged&&e.gs?e.gs[k]:'';
+      return '<div>'+x+(g?' <span class="gn">'+g+'</span>':'')+'</div>';
+    }).join('');
+    if(e.merged) lab+='<div style="color:var(--muted);font-size:10px">（原表では1欄に統合）</div>';
+    h+='<tr><td class="eq">'+lab+'</td>';
+    t.areas.forEach(function(a){
+      var m=marks(a)[col], tn=m[1]?'※'+m[1].split(',').join('※'):'';
+      var gt=(m[0]==='o'||m[0]==='d'||m[0]==='a')&&gn.length?'※'+gn.join('※'):'';
+      h+='<td class="cell"><span class="mk m-'+(m[0]==='-'?'n':m[0])+'">'+SYM[m[0]]+'</span>'+
+        ((tn||gt)?'<span class="nn">'+(tn?'<span class="t">'+tn+'</span>':'')+(tn&&gt?' ':'')+(gt?'<span class="g">'+gt+'</span>':'')+'</span>':'')+'</td>';
+    });
+    h+='</tr>';
+  });
+  h+='</tbody>';
+  document.getElementById('tbl').innerHTML=h;
+  document.getElementById('tnotes').innerHTML='<b>この船種の注記（水色の※）</b>'+t.notes.map(function(g){
+    return '<div class="h">（'+g[0]+'）</div>'+g[1].map(function(x){return '<div><b>※'+x[0]+'</b>　'+x[1]+'</div>';}).join('');
+  }).join('');
+}
+function buildTabs(){
+  var c=document.getElementById('tabs');
+  c.innerHTML=TABN.map(function(x,i){return '<button class="tab'+(i===cur?' on':'')+'" role="tab" data-i="'+i+'">'+x+'</button>';}).join('');
+  c.onclick=function(ev){
+    var b=ev.target.closest('.tab'); if(!b) return;
+    cur=+b.dataset.i;
+    Array.prototype.forEach.call(c.children,function(el,i){el.classList.toggle('on',i===cur);});
+    build();
+  };
+}
+build(); buildTabs();
+</script>
+</body>
+</html>
